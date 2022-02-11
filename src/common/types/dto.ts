@@ -2,8 +2,11 @@ import { ClassConstructor, Exclude, plainToClass } from 'class-transformer'
 
 export class Dto {
   @Exclude()
-  _isDto: true
+  $isDto: true
 }
 
-export const transformToDto = <T>(entityClass: ClassConstructor<T>, entity: unknown) =>
-  plainToClass(entityClass, entity, { excludeExtraneousValues: true })
+export const toDto =
+  <TEntity>() =>
+  <TDto>(dtoClass: ClassConstructor<TDto>) =>
+  (entity: TEntity) =>
+    plainToClass(dtoClass, entity, { excludeExtraneousValues: true })

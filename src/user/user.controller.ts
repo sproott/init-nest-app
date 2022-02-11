@@ -14,7 +14,7 @@ import {
 import { RegisterResponseDto, registerResponseDtoTypes } from './dto/register-response.dto'
 import { LoginResponseDto, loginResponseDtoType } from './dto/login-response.dto'
 import {
-  CurrentUserData,
+  CurrentUserDto,
   currentUserDtoTypes,
   CurrentUserError,
   CurrentUserResponseDto,
@@ -83,6 +83,6 @@ export class UserController {
     if (!user) {
       return Response.error(CurrentUserError.NOT_FOUND)
     }
-    return Response.data(CurrentUserData.fromUser(user))
+    return Response.data(CurrentUserDto.fromUser(user))
   }
 }
