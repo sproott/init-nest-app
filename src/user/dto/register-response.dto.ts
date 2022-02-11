@@ -1,4 +1,4 @@
-import { ApiResponseDtoInput, ResponseType } from 'src/common/decorators/response-dto-type'
+import { ResponseDtoTypeInput, ResponseType } from 'src/common/decorators/response-dto-type'
 
 import { ResponseDto } from 'src/common/types/response.dto'
 
@@ -13,7 +13,7 @@ export class RegisterResponseData {
 
 export type RegisterResponseDto = ResponseDto<RegisterResponseData, RegisterResponseError>
 
-export const registerResponseDtoTypes: ApiResponseDtoInput = {
+export const registerResponseDtoTypes: ResponseDtoTypeInput = {
   data: ResponseType.object(RegisterResponseData),
   error: ResponseType.enum(RegisterResponseError),
 }

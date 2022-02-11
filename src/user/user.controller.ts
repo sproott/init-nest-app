@@ -12,7 +12,7 @@ import {
 } from 'src/common/decorators/response-dto-type'
 
 import { RegisterResponseDto, registerResponseDtoTypes } from './dto/register-response.dto'
-import { LoginResponseDto, loginResponseDtoTypes } from './dto/login-response.dto'
+import { LoginResponseDto, loginResponseDtoType } from './dto/login-response.dto'
 import {
   CurrentUserData,
   currentUserDtoTypes,
@@ -54,7 +54,7 @@ export class UserController {
   }
 
   @Post('login')
-  @ApiResponseDtoType(loginResponseDtoTypes)
+  @ApiResponseDtoType(loginResponseDtoType)
   async login(
     @Body() loginDto: LoginDto,
     @Res({ passthrough: true }) res: FastifyReply,

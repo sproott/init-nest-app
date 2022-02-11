@@ -9,16 +9,16 @@ import { applyDecorators } from '@nestjs/common'
 
 type PrimitiveType = 'boolean' | 'number' | 'string'
 
-type ResponseDtoInputType = (SchemaObject | ReferenceObject) & {
+type ResponseTypeInput = (SchemaObject | ReferenceObject) & {
   refs?: ClassConstructor<unknown>[]
 }
 
-export type ApiResponseDtoInput = {
-  data: ResponseDtoInputType
-  error: ResponseDtoInputType
+export type ResponseDtoTypeInput = {
+  data: ResponseTypeInput
+  error: ResponseTypeInput
 }
 
-export const ApiResponseType = (schema: ResponseDtoInputType) =>
+export const ApiResponseType = (schema: ResponseTypeInput) =>
   applyDecorators(
     ApiResponse({
       schema,
@@ -26,7 +26,7 @@ export const ApiResponseType = (schema: ResponseDtoInputType) =>
     ApiExtraModels(...(schema.refs ?? [])),
   )
 
-export const ApiResponseDtoType = ({ data, error }: ApiResponseDtoInput) =>
+export const ApiResponseDtoType = ({ data, error }: ResponseDtoTypeInput) =>
   applyDecorators(
     ApiResponseType({
       oneOf: [
@@ -56,27 +56,24 @@ export const ApiResponseDtoType = ({ data, error }: ApiResponseDtoInput) =>
   )
 
 export class ResponseType {
-  static object = <T>(value: ClassConstructor<T>, nullable = false): ResponseDtoInputType => ({
+  static object = <T>(value: ClassConstructor<T>, nullable = false): ResponseTypeInput => ({
     oneOf: [{ $ref: getSchemaPath(value as any) }],
     nullable,
     refs: [value],
   })
 
-  static enum = (values: Record<string, string>, nullable = false): ResponseDtoInputType => ({
+  static enum = (values: Record<string, string>, nullable = false): ResponseTypeInput => ({
     enum: Object.values(values),
     type: 'string',
     nullable,
   })
 
-  static primitive = (primitiveType: PrimitiveType, nullable = false): ResponseDtoInputType => ({
+  static primitive = (primitiveType: PrimitiveType, nullable = false): ResponseTypeInput => ({
     type: primitiveType,
     nullable,
   })
 
-  static custom = (
-    schema: SchemaObject,
-    refs: ClassConstructor<unknown>[],
-  ): ResponseDtoInputType => ({
+  static custom = (schema: SchemaObject, refs: ClassConstructor<unknown>[]): ResponseTypeInput => ({
     ...schema,
     refs,
   })
