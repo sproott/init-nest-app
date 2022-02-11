@@ -57,7 +57,7 @@ export const ApiResponseDtoType = ({ data, error }: ResponseDtoTypeInput) =>
 
 export class ResponseType {
   static object = <T>(value: ClassConstructor<T>, nullable = false): ResponseTypeInput => ({
-    oneOf: [{ $ref: getSchemaPath(value as any) }],
+    oneOf: [{ $ref: getSchemaPath(value) }],
     nullable,
     refs: [value],
   })

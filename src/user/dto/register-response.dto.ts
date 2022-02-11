@@ -1,4 +1,4 @@
-import { ResponseDtoTypeInput, ResponseType } from 'src/common/decorators/response-dto-type'
+import { ResponseDtoTypeInput, ResponseType } from 'src/common/decorators/api-response-type'
 
 import { ResponseDto } from 'src/common/types/response.dto'
 

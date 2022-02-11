@@ -2,7 +2,7 @@ import { Dto, transformToDto } from 'src/common/types/dto'
 
 import { Expose } from 'class-transformer'
 import { ResponseDto } from 'src/common/types/response.dto'
-import { ResponseType } from 'src/common/decorators/response-dto-type'
+import { ResponseType } from 'src/common/decorators/api-response-type'
 import { User } from '../entities/user.entity'
 
 export class CurrentUserData extends Dto {

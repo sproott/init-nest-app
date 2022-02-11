@@ -9,7 +9,7 @@ import {
   ApiResponseDtoType,
   ApiResponseType,
   ResponseType,
-} from 'src/common/decorators/response-dto-type'
+} from 'src/common/decorators/api-response-type'
 
 import { RegisterResponseDto, registerResponseDtoTypes } from './dto/register-response.dto'
 import { LoginResponseDto, loginResponseDtoType } from './dto/login-response.dto'
