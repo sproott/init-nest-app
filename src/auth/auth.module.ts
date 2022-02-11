@@ -1,5 +1,6 @@
-import { AuthService } from './auth.service'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+
+import { AuthService } from './auth.service'
 import { JwtModule } from '@nestjs/jwt'
 import { Module } from '@nestjs/common'
 
@@ -19,4 +20,4 @@ import { Module } from '@nestjs/common'
   providers: [AuthService],
   exports: [AuthService],
 })
-export class AuthModule { }
+export class AuthModule {}

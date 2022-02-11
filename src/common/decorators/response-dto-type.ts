@@ -7,7 +7,7 @@ import {
 import { ClassConstructor } from 'class-transformer'
 import { applyDecorators } from '@nestjs/common'
 
-type PrimitiveType = 'boolean' | 'number' | 'string' | 'null'
+type PrimitiveType = 'boolean' | 'number' | 'string'
 
 type ResponseDtoInputType = (SchemaObject | ReferenceObject) & {
   refs?: ClassConstructor<unknown>[]
@@ -18,39 +18,44 @@ export type ApiResponseDtoInput = {
   error: ResponseDtoInputType
 }
 
-export const ApiResponseDto = ({ data, error }: ApiResponseDtoInput) => {
-  return applyDecorators(
+export const ApiResponseType = (schema: ResponseDtoInputType) =>
+  applyDecorators(
     ApiResponse({
-      schema: {
-        oneOf: [
-          {
-            type: 'object',
-            properties: {
-              type: {
-                enum: ['data'],
-                type: 'string',
-              },
-              data,
-            },
-          },
-          {
-            type: 'object',
-            properties: {
-              type: {
-                enum: ['error'],
-                type: 'string',
-              },
-              error,
-            },
-          },
-        ],
-      },
+      schema,
     }),
-    ApiExtraModels(...([...(data.refs ?? []), ...(error.refs ?? [])] as any[])),
+    ApiExtraModels(...(schema.refs ?? [])),
   )
-}
 
-export class CreateResponseType {
+export const ApiResponseDtoType = ({ data, error }: ApiResponseDtoInput) =>
+  applyDecorators(
+    ApiResponseType({
+      oneOf: [
+        {
+          type: 'object',
+          properties: {
+            type: {
+              enum: ['data'],
+              type: 'string',
+            },
+            data,
+          },
+        },
+        {
+          type: 'object',
+          properties: {
+            type: {
+              enum: ['error'],
+              type: 'string',
+            },
+            error,
+          },
+        },
+      ],
+      refs: [...(data.refs ?? []), ...(error.refs ?? [])],
+    }),
+  )
+
+export class ResponseType {
   static object = <T>(value: ClassConstructor<T>, nullable = false): ResponseDtoInputType => ({
     oneOf: [{ $ref: getSchemaPath(value as any) }],
     nullable,
@@ -75,4 +80,8 @@ export class CreateResponseType {
     ...schema,
     refs,
   })
+
+  static boolean = ResponseType.primitive('boolean')
+  static number = ResponseType.primitive('number')
+  static string = ResponseType.primitive('string')
 }

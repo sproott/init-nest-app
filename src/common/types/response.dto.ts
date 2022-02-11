@@ -7,11 +7,9 @@ export type ResponseError<TError> = {
   error: TError
 }
 
-export type ResponseDto<TData, TError> =
-  | ResponseData<TData>
-  | ResponseError<TError>
+export type ResponseDto<TData, TError> = ResponseData<TData> | ResponseError<TError>
 
-export class CreateResponse {
+export class Response {
   static data = <TData>(data: TData): ResponseData<TData> => ({
     type: 'data',
     data,

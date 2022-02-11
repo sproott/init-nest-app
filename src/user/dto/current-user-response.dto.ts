@@ -1,8 +1,8 @@
 import { Dto, transformToDto } from 'src/common/types/dto'
 
-import { CreateResponseType } from 'src/common/decorators/response-dto-type'
 import { Expose } from 'class-transformer'
 import { ResponseDto } from 'src/common/types/response.dto'
+import { ResponseType } from 'src/common/decorators/response-dto-type'
 import { User } from '../entities/user.entity'
 
 export class CurrentUserData extends Dto {
@@ -23,6 +23,6 @@ export enum CurrentUserError {
 export type CurrentUserResponseDto = ResponseDto<CurrentUserData | null, CurrentUserError>
 
 export const currentUserDtoTypes = {
-  data: CreateResponseType.object(CurrentUserData, true),
-  error: CreateResponseType.enum(CurrentUserError),
+  data: ResponseType.object(CurrentUserData, true),
+  error: ResponseType.enum(CurrentUserError),
 }
