@@ -1,4 +1,6 @@
-const knexSettings = {
+import { Knex } from 'knex'
+
+const knexSettings: Record<string, Knex.Config> = {
   development: {
     client: 'pg',
     connection: {

@@ -1,8 +1,8 @@
-import knexSettings from "../knexfile"
-import { Knex } from "knex"
+import { Knex, knex } from 'knex'
 
-const environment = process.env.NODE_ENV ?? "development"
-const config = knexSettings[environment]
-const knex: Knex = require("knex")(config)
+import knexSettings from '../knexfile'
 
-export { knex }
+const config = knexSettings[process.env.NODE_ENV] ?? knexSettings['development']
+const customKnex: Knex = knex(config)
+
+export { customKnex as knex }
